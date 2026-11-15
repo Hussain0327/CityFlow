@@ -317,4 +317,9 @@ public class CityGraph {
 
     return false;
   }
+
+  public Map<String, Road> getOutgoingRoads(String id) {
+    Intersection intersection = requireIntersection(id);
+    return Map.copyOf(intersection.adjacents);
+  }
 }

@@ -1,4 +1,6 @@
+import engine.RoutePlanner;
 import graph.CityGraph;
+import java.util.List;
 
 public class Main {
 
@@ -8,24 +10,16 @@ public class Main {
     city.addIntersection("A", "Main Street");
     city.addIntersection("B", "Broadway");
     city.addIntersection("C", "Park Avenue");
-    city.addIntersection("D", "Wall Street");
 
-    city.connect("A", "B", 5.0, 50.0);
-    city.connect("A", "C", 3.0, 30.0);
-    city.connect("B", "D", 2.0, 40.0);
-    city.connect("C", "D", 4.0, 40.0);
+    city.connect("A", "B", 10.0, 30.0); // 20 minutes
+    city.connect("A", "C", 2.0, 30.0); // 4 minutes
+    city.connect("C", "B", 2.5, 30.0); // 5 minutes
 
-    System.out.println("Vertices: " + city.vertexCount());
-    System.out.println("Edges: " + city.edgeCount());
-    System.out.println("Neighbors of A: " + city.getNeighbors("A"));
+    RoutePlanner planner = new RoutePlanner(city);
 
-    System.out.println("BFS: " + city.bfs("A"));
-    System.out.println("DFS: " + city.dfs("A"));
+    List<String> route = planner.fastestRoute("A", "B");
 
-    System.out.println("Shortest A to D: " + city.shortestPath("A", "D"));
-    System.out.println("Reachable D to A: " + city.isReachable("D", "A"));
-
-    System.out.println("In-degree D: " + city.inDegree("D"));
-    System.out.println("Out-degree A: " + city.outDegree("A"));
+    System.out.println("Fastest route: " + route);
+    System.out.println("Travel time: " + planner.calculateTravelTime(route) + " minutes");
   }
 }
